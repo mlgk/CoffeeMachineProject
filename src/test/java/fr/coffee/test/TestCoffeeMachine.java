@@ -17,7 +17,7 @@ public class TestCoffeeMachine {
 	@Test
 	public void getOrdersFromMachineExistTest(){
 		
-		Orders order = new Orders("Chocolate",2,0.4);
+		Orders order = new Orders("Chocolate",2,0.5);
 		
 		CoffeeMachine machine =new CoffeeMachine();
 
@@ -27,7 +27,7 @@ public class TestCoffeeMachine {
 	@Test
 	public void getOrdersFromMachineNotExistTest(){
 		
-		Orders order = new Orders("Jus",1,0.5);
+		Orders order = new Orders("Juice",1,0.5);
 		
 		CoffeeMachine machine =new CoffeeMachine();
 
@@ -42,6 +42,27 @@ public class TestCoffeeMachine {
 		CoffeeMachine machine =new CoffeeMachine();
 
 		assertEquals(machine.getOrdersFromMachine(order) , "T::");
+	}
+	
+
+	@Test
+	public void getOrdersFromMachineHaveMonneyTest(){
+		
+		Orders order = new Orders("Coffee",2,0.6);
+		
+		CoffeeMachine machine =new CoffeeMachine();
+
+		assertEquals(machine.getOrdersFromMachine(order) , "C:2:0");
+	}
+	
+	@Test
+	public void getOrdersFromMachineMonneyRestTest(){
+		
+		Orders order = new Orders("Coffee",2,0.4);
+		
+		CoffeeMachine machine =new CoffeeMachine();
+
+		assertEquals(machine.getOrdersFromMachine(order) , "M : It is missing : 0.2");
 	}
 }
 

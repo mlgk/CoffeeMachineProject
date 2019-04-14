@@ -32,7 +32,7 @@ public class CoffeeMachine {
 				// sugar between 0 and 5
 				if (order.getNbSugar() <= 5 && order.getNbSugar() >= 0) {
 
-					message = calculateAmount(order ,drink);
+					message = moneyChecker(order ,drink);
 
 					break;
 					
@@ -79,7 +79,13 @@ public class CoffeeMachine {
 		return msg.toString();
 	}
 
-	public String calculateAmount(Orders order ,Drinks drink){
+	/**
+	 * Cheking of money
+	 * @param order
+	 * @param drink
+	 * @return message
+	 */
+	public String moneyChecker(Orders order ,Drinks drink){
 		
 		String message = "" ;
 		

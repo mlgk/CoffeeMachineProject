@@ -1,5 +1,6 @@
 package fr.coffee;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,15 +24,23 @@ public class CoffeeMachine {
 
 		String message = "";
 
-		for (Drinks drinks : typeDrinks) {
+		for (Drinks drink : typeDrinks) {
 
 			// if found drink
-			if (drinks.getdrinkName() == order.getTypeDrink()) {
+			if (drink.getdrinkName() == order.getTypeDrink()) {
 
-				message = getMessage(order.getNbSugar(), drinks);
-				
-				break;
-				
+				// sugar between 0 and 5
+				if (order.getNbSugar() <= 5 && order.getNbSugar() >= 0) {
+
+					message = calculateAmount(order ,drink);
+
+					break;
+					
+				}else{
+
+					message = "M: The number of sugar must be between 0 and 5";
+				}
+
 			} else {
 
 				message = "M: The drink does not exist";
@@ -55,26 +64,41 @@ public class CoffeeMachine {
 
 		StringBuilder msg = new StringBuilder();
 
-		if (sugar <= 5 && sugar >= 0) {
+		msg.append(drink.getcode());
 
-			msg.append(drink.getcode());
+		if (sugar == 0) {
 
-			if (sugar == 0) {
-
-				msg.append(":").append(":");
-
-			} else {
-
-				msg.append(":").append(sugar).append(":").append("0");
-
-			}
+			msg.append(":").append(":");
 
 		} else {
 
-			msg.append("M:").append("The number of sugar must be between 0 and 5");
+			msg.append(":").append(sugar).append(":").append("0");
+
 		}
 
 		return msg.toString();
+	}
+
+	public String calculateAmount(Orders order ,Drinks drink){
+		
+		String message = "" ;
+		
+		// if the amount is sufficient
+		if (order.getMoney() >= (drink.getPrice())) {
+
+			message = getMessage(order.getNbSugar(), drink);
+
+		}else{
+
+			// calculate the rest
+			BigDecimal restOfMoney = BigDecimal.valueOf(drink.getPrice())
+					.subtract(BigDecimal.valueOf(order.getMoney()));
+
+			message = "M : It is missing : " + restOfMoney;
+
+		}
+
+		return message;
 	}
 
 }

@@ -17,7 +17,7 @@ public class TestCoffeeMachine {
 	@Test
 	public void getOrdersFromMachineExistTest(){
 		
-		Orders order = new Orders("Chocolate",2);
+		Orders order = new Orders("Chocolate",2,0.4);
 		
 		CoffeeMachine machine =new CoffeeMachine();
 
@@ -27,7 +27,7 @@ public class TestCoffeeMachine {
 	@Test
 	public void getOrdersFromMachineNotExistTest(){
 		
-		Orders order = new Orders("Jus",1);
+		Orders order = new Orders("Jus",1,0.5);
 		
 		CoffeeMachine machine =new CoffeeMachine();
 
@@ -37,7 +37,7 @@ public class TestCoffeeMachine {
 	@Test
 	public void getOrdersFromMachineNoSugarTest(){
 		
-		Orders order = new Orders("Tea",0);
+		Orders order = new Orders("Tea",0,0.7);
 		
 		CoffeeMachine machine =new CoffeeMachine();
 

@@ -10,7 +10,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		//initialize an order
-		Orders order = new Orders("Juis",-1);
+		Orders order = new Orders("Tea",0,0.1);
 	
 		CoffeeMachine machine =new CoffeeMachine();
 

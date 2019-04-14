@@ -12,7 +12,7 @@ import java.util.List;
 public class CoffeeMachine {
 
 	// List of type drinks
-	private static List<Drinks> typeDrinks = Arrays.asList(Drinks.values());
+	private static List<Drink> typeDrinks = Arrays.asList(Drink.values());
 
 	/**
 	 * Get Order From Machine
@@ -20,11 +20,11 @@ public class CoffeeMachine {
 	 * @param order
 	 * @return message
 	 */
-	public String getOrdersFromMachine(Orders order) {
+	public String getOrdersFromMachine(Order order) {
 
 		String message = "";
 
-		for (Drinks drink : typeDrinks) {
+		for (Drink drink : typeDrinks) {
 
 			// if found drink
 			if (drink.getdrinkName() == order.getTypeDrink()) {
@@ -32,11 +32,11 @@ public class CoffeeMachine {
 				// sugar between 0 and 5
 				if (order.getNbSugar() <= 5 && order.getNbSugar() >= 0) {
 
-					message = moneyChecker(order ,drink);
+					message = moneyChecker(order, drink);
 
 					break;
-					
-				}else{
+
+				} else {
 
 					message = "M: The number of sugar must be between 0 and 5";
 				}
@@ -60,13 +60,16 @@ public class CoffeeMachine {
 	 *            type of drink
 	 * @return message
 	 */
-	public String getMessage(int sugar, Drinks drink) {
+	public String getMessage(int sugar, Drink drink) {
 
 		StringBuilder msg = new StringBuilder();
+		
+		//check if drink is hot
+		String hot = getExtraHot(drink.isExtraHot());
+		
+		msg.append(drink.getCode()).append(hot);
 
-		msg.append(drink.getcode());
-
-		if (sugar == 0) {
+		if (sugar == 0 || !drink.isExtraHot()) {
 
 			msg.append(":").append(":");
 
@@ -81,20 +84,21 @@ public class CoffeeMachine {
 
 	/**
 	 * Cheking of money
+	 * 
 	 * @param order
 	 * @param drink
 	 * @return message
 	 */
-	public String moneyChecker(Orders order ,Drinks drink){
-		
-		String message = "" ;
-		
+	public String moneyChecker(Order order, Drink drink) {
+
+		String message = "";
+
 		// if the amount is sufficient
 		if (order.getMoney() >= (drink.getPrice())) {
 
 			message = getMessage(order.getNbSugar(), drink);
 
-		}else{
+		} else {
 
 			// calculate the rest
 			BigDecimal restOfMoney = BigDecimal.valueOf(drink.getPrice())
@@ -105,6 +109,21 @@ public class CoffeeMachine {
 		}
 
 		return message;
+	}
+
+	/**
+	 * get extra hot of drink
+	 * @param extraHot
+	 * @return
+	 */
+	public String getExtraHot(boolean extraHot) {
+		String hot = "h";
+
+		if (extraHot != true) {
+			hot = "";
+		}
+
+		return hot;
 	}
 
 }

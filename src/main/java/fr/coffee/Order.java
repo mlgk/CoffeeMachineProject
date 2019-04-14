@@ -5,7 +5,7 @@ package fr.coffee;
  * @author Lydia
  *
  */
-public class Orders {
+public class Order {
 
 	private  String typeDrink ; 
 	
@@ -17,7 +17,7 @@ public class Orders {
 	
 	private int nbrSugar; 
 
-	public Orders(String typeDrink, int nbrSugar , double money) {
+	public Order(String typeDrink, int nbrSugar , double money) {
 		super();
 		this.typeDrink = typeDrink;
 		this.nbrSugar = nbrSugar;

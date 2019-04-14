@@ -34,6 +34,15 @@ public class TestCoffeeMachine {
 		assertEquals(machine.getOrdersFromMachine(order) , "M: The drink does not exist");
 	}
 	
+	@Test
+	public void getOrdersFromMachineNoSugarTest(){
+		
+		Orders order = new Orders("Tea",0);
+		
+		CoffeeMachine machine =new CoffeeMachine();
+
+		assertEquals(machine.getOrdersFromMachine(order) , "T::");
+	}
 }
 
 

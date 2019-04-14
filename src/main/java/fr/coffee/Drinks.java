@@ -1,5 +1,10 @@
 package fr.coffee;
 
+/**
+ * 
+ * @author Lydia
+ *
+ */
 public enum Drinks {
 
 	TEA ("T","Tea" ), 

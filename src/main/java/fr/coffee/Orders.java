@@ -1,5 +1,10 @@
 package fr.coffee;
 
+/**
+ * 
+ * @author Lydia
+ *
+ */
 public class Orders {
 
 	private  String typeDrink ; 

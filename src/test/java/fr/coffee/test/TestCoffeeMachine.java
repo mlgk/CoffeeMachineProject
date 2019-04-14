@@ -27,7 +27,7 @@ public class TestCoffeeMachine {
 	@Test
 	public void getOrdersFromMachineNotExistTest(){
 		
-		Orders order = new Orders("Jus",1);
+		Orders order = new Orders("Juice",1);
 		
 		CoffeeMachine machine =new CoffeeMachine();
 

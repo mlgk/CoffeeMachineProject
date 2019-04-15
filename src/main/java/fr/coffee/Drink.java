@@ -42,10 +42,4 @@ public enum Drink {
 		return extraHot;
 	}
 
-	public String getdrinkName() {
-		return drinkName;
-	}
-
-
-
 }

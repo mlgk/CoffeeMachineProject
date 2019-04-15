@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import fr.coffee.machine.service.BeverageQuantityChecker;
+import fr.coffee.machine.service.EmailNotifier;
+
 /**
  * 
  * @author Lydia
@@ -18,13 +21,28 @@ public class CoffeeMachine {
 	private static List<Drink> typeDrinks = Arrays.asList(Drink.values());
 
 	private static Map<Drink, Integer> map;
-	
+
+	private  BeverageQuantityChecker beverageQuantityChecker =null;
+
+	private  EmailNotifier emailNotifier = null;
+
 	private Drink drink;
-	
-	public CoffeeMachine() {
-		
+
+	public CoffeeMachine( BeverageQuantityChecker beverageQuantityChecker, EmailNotifier emailNotifier) {
+
 		map = new HashMap<>();
+
+		this.beverageQuantityChecker = beverageQuantityChecker;
+
+		this.emailNotifier = emailNotifier;
 	}
+
+	public CoffeeMachine( ){
+
+		map = new HashMap<>();
+
+	}
+
 
 	/**
 	 * Get Order From Machine
@@ -38,14 +56,22 @@ public class CoffeeMachine {
 
 		drink = getDrink(order);
 
-		if(getDrink(order)!=null){
+		if(drink != null){
 
 			// sugar between 0 and 5
 			if (order.getNbSugar() <= 5 && order.getNbSugar() >= 0) {
 
-				message = moneyChecker(order, drink);
+				if(isEmptyDrink(order)){
 
-				report(drink);
+					message = "M: Drink missing";
+				}		
+				else
+				{
+
+					message = moneyChecker(order, drink);
+
+					report(drink);
+				}
 
 			} else {
 
@@ -61,6 +87,28 @@ public class CoffeeMachine {
 		return message;
 	}
 
+	/**
+	 * check the availability of the drink in the machine
+	 * @param order
+	 * @return true if the drink is not available
+	 */
+	private boolean isEmptyDrink(Order order){
+
+		boolean result = false;
+		
+		if(beverageQuantityChecker!=null && emailNotifier!=null){
+			
+			if(beverageQuantityChecker.isEmpty(order.getTypeDrink())) 		
+			{
+
+				emailNotifier.notifyMissingDrink(order.getTypeDrink());
+
+				result = true;
+			}
+		}
+
+		return result ;
+	}
 	/**
 	 * Write Message function
 	 * 
@@ -159,7 +207,7 @@ public class CoffeeMachine {
 	 * @param drink
 	 */
 	private static void report(Drink drink) {
-		
+
 		if (map.containsKey(drink)) {
 
 			map.put(drink, map.get(drink) + 1);
@@ -180,20 +228,20 @@ public class CoffeeMachine {
 		double sumMoney;
 
 		StringBuilder msg = new StringBuilder();
-		
+
 		String newLine = System.getProperty("line.separator");
-		
+
 		if(!map.isEmpty()){
-			
+
 			for(Entry<Drink, Integer> entry : map.entrySet()) {
-				
+
 				sumMoney = (entry.getKey().getPrice()) * (entry.getValue());
-				
+
 				msg.append("M: The coffee machine produces ").append(entry.getValue()).append(" ").append(entry.getKey().getDrinkName()).append(", with a total of").append(" : ").append(sumMoney).append(" £").append(newLine);
 			}
-			
+
 		}else{
-			
+
 			msg.append("M: The coffee machine did not produce any drinks");
 		}
 
